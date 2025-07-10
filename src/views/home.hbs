@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DGM Mind – Automatiza tu Reclutamiento con Inteligencia</title>
+
+    <link rel="icon" href="/placeholder.svg?height=32&width=32" type="image/svg+xml">
+</head>
+<body>
+    <style>
+/* Variables CSS para colores */
+:root {
+  /* Light Mode */
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --muted:  #f5f5f5;
+  --muted-foreground: #6b7280;
+  --primary: #008b3a; /* Un tono de púrpura/azul */
+  --primary-hover: #4f46e5;
+  --border: #e5e7eb;
+  --card-background: #ffffff;
+  --card-border: #e5e7eb;
+  --input-background: #ffffff;
+  --input-border: #d1d5db;
+  --placeholder-color: #9ca3af;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+  --background: #000000; /* True black */
+  --foreground: #e0e0e0; /* Light gray for text */
+  --muted: #0a0a0a; /* Very dark gray for muted sections */
+  --muted-foreground: #a0a0a0; /* Medium gray for muted text */
+  --primary: #008b3a; /* A brighter purple for dark mode */
+  --primary-hover: #7c3aed;
+  --border: #1a1a1a; /* Dark gray for borders */
+  --card-background: #0a0a0a; /* Slightly lighter than background for cards */
+  --card-border: #1a1a1a; /* Darker border for cards */
+  --input-background: #0a0a0a;
+  --input-border: #2a2a2a;
+  --placeholder-color: #71717a;
+}
+
+/* Base Styles */
+body {
+  font-family: -apple-system, BlinkMacMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  color: var(--foreground);
+  background-color: var(--background);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Gradient for dark mode body */
+body[data-theme="dark"] {
+  background-image: radial-gradient(
+    100% 50% at 50% 0%,
+    rgba(0, 163, 255, 0.13) 0%,
+    rgba(0, 163, 255, 0) 50%,
+    rgba(0, 163, 255, 0) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 100%; /* Ensure it covers the whole body */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 3rem;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-small {
+  font-size: 0.875rem;
+}
+
+.text-muted-foreground {
+  color: var(--muted-foreground);
+}
+
+.underline {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.mt-medium {
+  margin-top: 1.5rem;
+}
+.mt-large {
+  margin-top: 3rem;
+}
+.mb-large {
+  margin-bottom: 3rem;
+}
+
+/* Buttons */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.button.primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.button.primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.button.outline {
+  background-color: #141517;
+  color: var(--foreground);
+  border-color: var(--border);
+}
+
+.button.outline:hover {
+  background-color: var(--muted);
+  border-color: var(--muted);
+}
+
+.button.icon-button {
+  padding: 0.75rem 1rem;
+  gap: 0.5rem;
+}
+
+/* Inputs & Selects */
+.input-field,
+.select-field {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-background);
+  color: var(--foreground);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.input-field::placeholder {
+  color: var(--placeholder-color);
+}
+
+.input-field:focus,
+.select-field:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2); /* primary with transparency */
+}
+
+.input-field.large-input {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.125rem;
+}
+
+.select-field {
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1em;
+}
+
+/* Header */
+header {
+  background-color: var(--background);
+  border-bottom: 1px solid var(--border);
+  padding: 0.875rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3.5rem; /* h-14 */
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+header nav {
+  display: flex;
+  gap: 1.5rem; /* sm:gap-6 */
+  margin-left: auto;
+}
+
+header nav a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  text-decoration: none;
+  position: relative;
+}
+
+header nav a:hover {
+  text-decoration: none;
+}
+
+header nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--primary);
+  transition: width 0.3s ease;
+}
+
+header nav a:hover::after {
+  width: 100%;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--foreground);
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--muted);
+}
+
+.theme-toggle-button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+html[data-theme="dark"] .sun-icon {
+  display: none;
+}
+html[data-theme="light"] .moon-icon {
+  display: none;
+}
+
+/* Sections */
+.section {
+  padding: 3rem 0; /* py-12 */
+}
+
+.section.bg-muted {
+  background-color: var(--muted);
+  transition: background-color 0.3s ease;
+}
+
+.section.border-top {
+  border-top: 1px solid var(--border);
+  transition: border-color 0.3s ease;
+}
+
+.section-description {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.125rem; /* md:text-xl/relaxed */
+  color: var(--muted-foreground);
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 3rem 0; /* py-12 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2rem; /* space-y-8 */
+}
+
+.hero-section .container {
+  max-width: 900px; /* max-w-4xl */
+}
+
+.hero-section h1 {
+  font-size: 2.5rem; /* text-4xl */
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.25rem; /* md:text-xl */
+  color: var(--muted-foreground);
+  margin-bottom: 2rem;
+}
+
+.hero-video-container {
+  width: 100%;
+  max-width: 600px; /* max-w-xl */
+  margin-top: 3rem; /* mt-12 */
+  padding: 0 1rem;
+}
+
+.hero-video-container video {
+  width: 50%;
+  height: auto;
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+
+  transition: border-color 0.3s ease;
+}
+
+/* Feature Cards (Para Empresas, Beneficios) & Job Cards */
+.grid-3-cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem; /* gap-8 */
+  padding-top: 3rem; /* py-12 */
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feature-card,
+.job-card {
+  position: relative;
+  overflow: hidden; /* To contain the pseudo-element glow */
+  border-radius: 0.5rem;
+  background-color: var(--card-background);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1; /* Ensure content is above pseudo-element */
+}
+
+/* Dynamic Border for Dark Mode Cards */
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .job-card {
+  border: none; /* Remove base border in dark mode */
+  box-shadow: inset 0 0 0 1px #98a6e140;
+}
+
+[data-theme="dark"] .feature-card::before,
+[data-theme="dark"] .job-card::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background-size: 200% 200%;
+  background: radial-gradient(29.48% 34.97% at 0% 58.67%, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0) 100%), linear-gradient(rgb(17, 17, 17) 0%, rgba(0, 0, 0, 0.5) 100%);
+  animation: gradient-border 4s ease infinite;
+  z-index: -1; /* Behind the card content */
+  border-radius: inherit; /* Match card border-radius */
+  filter: blur(8px); /* Subtle glow */
+  opacity: 0.3; /* Initial subtle opacity */
+  transition: opacity 0.3s ease;
+}
+
+[data-theme="dark"] .feature-card:hover::before,
+[data-theme="dark"] .job-card:hover::before {
+  opacity: 0.6; /* More prominent on hover */
+}
+
+@keyframes gradient-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.feature-card svg {
+  height: 2rem; /* h-8 */
+  width: 2rem; /* w-8 */
+  color: var(--primary);
+}
+
+.feature-card h3 {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 700;
+  margin-top: 0.5rem; /* mt-2 */
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  font-size: 0.875rem; /* text-sm */
+  color: var(--muted-foreground);
+  margin-bottom: 0;
+}
+
+/* Job Vacancies Section */
+.search-filters {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem; /* gap-4 */
+  max-width: 700px; /* max-w-3xl */
+  margin: 0 auto 2rem auto; /* mb-8 */
+}
+
+.search-filters .full-width {
+  grid-column: 1 / -1;
+}
+
+.job-listings-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem; /* gap-6 */
+  max-width: 1000px; /* max-w-5xl */
+  margin: 0 auto;
+}
+
+.job-card-header {
+  margin-bottom: 1rem;
+}
+
+.job-card-header h3 {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.job-card-description {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.job-card-description svg {
+  height: 1rem;
+  width: 1rem;
+  color: var(--muted-foreground);
+}
+
+.job-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.job-card-meta {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.job-card-meta p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.job-card-meta svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.job-card .button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Contact Form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* gap-2 */
+  max-width: 400px; /* max-w-sm */
+  margin: 0 auto;
+}
+
+.contact-form .button {
+  width: 100%;
+}
+
+.privacy-text {
+  font-size: 0.75rem; /* text-xs */
+  color: var(--muted-foreground);
+  margin-top: 0.5rem;
+}
+
+/* Footer */
+footer {
+  background-color: var(--background);
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0; /* py-6 */
+  width: 100%;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* gap-2 */
+  align-items: center;
+  justify-content: center;
+}
+
+footer p {
+  font-size: 0.75rem; /* text-xs */
+  color: var(--muted-foreground);
+  margin-bottom: 0;
+}
+
+footer nav {
+  display: flex;
+  gap: 1rem; /* sm:gap-6 */
+  margin-top: 0.5rem;
+}
+
+footer nav a {
+  font-size: 0.75rem; /* text-xs */
+  color: var(--muted-foreground);
+}
+
+/* Responsive Design */
+@media (min-width: 640px) {
+  /* sm */
+  .header-content {
+    justify-content: space-between;
+  }
+  header nav {
+    gap: 1.5rem;
+  }
+  .grid-3-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .job-listings-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  footer nav {
+    margin-top: 0;
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 768px) {
+  /* md */
+  .section {
+    padding: 6rem 0; /* py-24 */
+  }
+  .hero-section h1 {
+    font-size: 3.5rem; /* sm:text-5xl */
+  }
+  .hero-section p {
+    font-size: 1.25rem; /* md:text-xl */
+  }
+  h2 {
+    font-size: 3rem; /* sm:text-5xl */
+  }
+  .section-description {
+    font-size: 1.25rem; /* md:text-xl/relaxed */
+  }
+  .search-filters {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+  .search-filters .input-field {
+    grid-column: span 2;
+  }
+  .search-filters .full-width {
+    grid-column: span 3;
+  }
+  .contact-form {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  .contact-form .button {
+    width: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* lg */
+  .section {
+    padding: 8rem 0; /* py-32 */
+  }
+  .hero-section h1 {
+    font-size: 4rem; /* md:text-6xl */
+  }
+  .section-description {
+    font-size: 1.125rem; /* lg:text-base/relaxed */
+  }
+  .grid-3-cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .job-listings-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  /* xl */
+  .section {
+    padding: 12rem 0; /* py-48 */
+  }
+  .hero-section h1 {
+    font-size: 4.5rem; /* lg:text-7xl/none */
+  }
+  .section-description {
+    font-size: 1.25rem; /* xl:text-xl/relaxed */
+  }
+}
+
+
+        </style>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">DGM Mind</a>
+            <nav>
+                <a href="#para-empresas">Para Empresas</a>
+                <a href="#para-candidatos">Para Candidatos</a>
+{{!--                 <a href="#beneficios">Beneficios</a> --}}
+{{!--                 <a href="#contacto">Contacto</a> --}}
+            </nav>
+{{!--             <button id="theme-toggle" class="theme-toggle-button" aria-label="Toggle dark mode"> --}}
+{{!--                 <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> --}}
+{{!--                     <circle cx="12" cy="12" r="4"/> --}}
+{{!--                     <path d="M12 2v2"/> --}}
+{{!--                     <path d="M12 20v2"/> --}}
+{{!--                     <path d="M4.93 4.93l1.41 1.41"/> --}}
+{{!--                     <path d="M17.66 17.66l1.41 1.41"/> --}}
+{{!--                     <path d="M2 12h2"/> --}}
+{{!--                     <path d="M20 12h2"/> --}}
+{{!--                     <path d="M4.93 19.07l1.41-1.41"/> --}}
+{{!--                     <path d="M17.66 6.34l1.41-1.41"/> --}}
+{{!--                 </svg> --}}
+{{!--                 <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> --}}
+{{!--                     <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/> --}}
+{{!--                 </svg> --}}
+{{!--             </button> --}}
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Hero principal (Inicio) -->
+        <section id="inicio" class="hero-section">
+            <div class="container">
+                <h1>DGM Mind – Automatiza tu Reclutamiento con Inteligencia</h1>
+                <p>Encuentra el talento que necesitas con nuestro bot 24/7.</p>
+                <a href="#contacto" class="button primary">Solicita una Demo</a>
+            </div>
+            <div class="hero-video-container">
+                <video autoplay loop muted playsinline src="https://resend.com/static/landing-page/3d-control.mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            </div>
+        </section>
+
+        <!-- 2. Para Empresas -->
+        <section id="para-empresas" class="section bg-muted">
+            <div class="container text-center">
+                <h2>Para Empresas: Reclutamiento Inteligente y Eficiente</h2>
+                <p class="section-description">DGM Mind transforma tu proceso de selección, permitiéndote encontrar a los mejores candidatos de forma automática y sin esfuerzo. Nuestro bot inteligente se encarga de todo, liberando a tu equipo para tareas estratégicas.</p>
+                <div class="grid-3-cols">
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><path d="M22 12H2"/><path d="M20 18h-4"/><path d="M2 12l2-2h8l2 2v8H4l-2-2z"/><path d="M18 18h4v-4h-4z"/></svg>
+                        <h3>Disponible 24/7</h3>
+                        <p>Nuestro bot trabaja sin descanso, interactuando con candidatos en cualquier momento.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                        <h3>Validación en Tiempo Real</h3>
+                        <p>Valida datos y requisitos del candidato al instante, asegurando información precisa.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                        <h3>Base de Datos Privada</h3>
+                        <p>Toda la información recolectada se guarda de forma segura en tu base de datos privada.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 7.5 17 12l-4.5 4.5"/><path d="m8 12 4.5 4.5L17 12"/><path d="M2 12h20"/></svg>
+                        <h3>Datos Configurables</h3>
+                        <p>Define qué datos recolectar: nombre, CV, experiencia, habilidades y más.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        <h3>Filtrado Avanzado</h3>
+                        <p>Filtra candidatos por ubicación, experiencia, sector y otros criterios clave.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <h3>Integración Sencilla</h3>
+                        <p>Implementa DGM Mind rápidamente en tus sistemas existentes.</p>
+                    </div>
+                </div>
+                <a href="#contacto" class="button primary mt-large">Implementar en mi empresa</a>
+            </div>
+        </section>
+
+        <!-- 3. Para Candidatos -->
+        <section id="para-candidatos" class="section">
+            <div class="container text-center">
+                <h2>¿Buscas empleo? Aplica desde tu celular en minutos.</h2>
+                <p class="section-description">Nuestro bot te guiará de forma sencilla y rápida a través del proceso de aplicación, haciendo tu búsqueda de empleo más eficiente y sin complicaciones.</p>
+                <a href="#vacantes-disponibles" class="button outline mt-medium">Buscar vacantes</a>
+            </div>
+        </section>
+
+        <!-- 4. Vacantes Disponibles -->
+        <section id="vacantes-disponibles" class="section bg-muted">
+            <div class="container">
+                <div class="text-center mb-large">
+                    <h2>Vacantes Disponibles</h2>
+                    <p class="section-description">Encuentra tu próximo empleo con nuestro motor de búsqueda ultra rápido.</p>
+                </div>
+                <div class="search-filters">
+                    <input type="text" id="search-input" placeholder="Buscar por puesto o palabra clave..." class="input-field">
+                    <select id="city-select" class="select-field">
+                        <option value="">Ciudad</option>
+                        <option value="Tegucigalpa">Tegucigalpa</option>
+                        <option value="San Pedro Sula">San Pedro Sula</option>
+                    </select>
+                    <button id="location-button" class="button outline icon-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 22c-4 0-7-4-7-9A7 7 0 0 1 12 5c4 0 7 4 7 9 0 5-3 9-7 9Z"/></svg>
+                        Activar Ubicación
+                    </button>
+                    <select id="category-select" class="select-field full-width">
+                        <option value="">Categoría</option>
+                        <option value="Call Center">Call Center</option>
+                        <option value="Restaurante">Restaurante</option>
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Publicidad">Publicidad</option>
+                        <option value="Logística">Logística</option>
+                        <option value="Oficina">Oficina</option>
+                    </select>
+                </div>
+                <div id="job-listings" class="job-listings-grid">
+                    <!-- Job cards will be injected here by JavaScript -->
+                </div>
+                <div class="text-center text-muted-foreground text-small mt-medium">
+                    Mostrando <span id="job-count">0</span> vacantes.
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Beneficios de la Plataforma -->
+        <section id="beneficios" class="section">
+            <div class="container text-center">
+                <h2>Beneficios Clave de DGM Mind</h2>
+                <p class="section-description">Descubre cómo DGM Mind optimiza tu proceso de reclutamiento y te ayuda a construir equipos de alto rendimiento.</p>
+                <div class="grid-3-cols">
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <h3>Ahorro de Tiempo Masivo</h3>
+                        <p>Reduce drásticamente el tiempo dedicado a la preselección y gestión de candidatos.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                        <h3>Mejora en Calidad de Candidatos</h3>
+                        <p>Filtra y selecciona a los candidatos más adecuados para cada puesto.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                        <h3>Gestión de Datos Centralizada</h3>
+                        <p>Mantén toda la información de los candidatos organizada y accesible en un solo lugar.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><path d="M22 12H2"/><path d="M20 18h-4"/><path d="M2 12l2-2h8l2 2v8H4l-2-2z"/><path d="M18 18h4v-4h-4z"/></svg>
+                        <h3>Recolección Automatizada</h3>
+                        <p>Deja que el bot recolecte y valide la información de los aspirantes 24/7.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <h3>Fácil Integración</h3>
+                        <p>Integra DGM Mind sin problemas con tus herramientas y flujos de trabajo actuales.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4 0-7-4-7-9A7 7 0 0 1 12 5c4 0 7 4 7 9 0 5-3 9-7 9Z"/><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></svg>
+                        <h3>Disponibilidad Continua</h3>
+                        <p>El sistema está siempre activo, garantizando que no pierdas ningún candidato potencial.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Llamado a la acción final -->
+        <section id="contacto" class="section bg-muted border-top">
+            <div class="container text-center">
+                <h2>¿Quieres implementar este sistema en tu empresa?</h2>
+                <p class="section-description">Agenda una demo personalizada y descubre cómo DGM Mind puede revolucionar tu reclutamiento.</p>
+                <form class="contact-form">
+                    <input type="email" placeholder="Ingresa tu email empresarial" class="input-field large-input">
+                    <button type="submit" class="button primary">Solicita una Demo</button>
+                </form>
+                <p class="privacy-text">
+                    Al enviar, aceptas nuestros <a href="#" class="underline">Términos y Condiciones</a>.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; <span id="current-year"></span> DGM Mind. Todos los derechos reservados.</p>
+            <nav>
+                <a href="#" class="text-small">Política de Privacidad</a>
+                <a href="#" class="text-small">Términos de Servicio</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Job Vacancies Data
+        const jobVacancies = [
+          { puesto: "Cajero", ciudad: "Tegucigalpa", sector: "Restaurante", empresa: "Pizza Bella" },
+          { puesto: "Agente de Call Center", ciudad: "San Pedro Sula", sector: "Call Center", empresa: "Hondutel" },
+          { puesto: "Barista", ciudad: "Tegucigalpa", sector: "Restaurante", empresa: "Café Central" },
+          { puesto: "Soporte Técnico", ciudad: "San Pedro Sula", sector: "Tecnología", empresa: "TechOne" },
+          { puesto: "Repartidor", ciudad: "Tegucigalpa", sector: "Restaurante", empresa: "Keko Delivery" },
+          { puesto: "Vendedor de Tienda", ciudad: "Tegucigalpa", sector: "Retail", empresa: "Tiendas Econo" },
+          { puesto: "Diseñador Gráfico", ciudad: "San Pedro Sula", sector: "Publicidad", empresa: "Agencia Boom" },
+          { puesto: "Cocinero", ciudad: "Tegucigalpa", sector: "Restaurante", empresa: "Los Asados" },
+          { puesto: "Encargado de Inventario", ciudad: "San Pedro Sula", sector: "Logística", empresa: "Distribuidora Azul" },
+          { puesto: "Asistente Administrativo", ciudad: "Tegucigalpa", sector: "Oficina", empresa: "Conti & Asociados" },
+        ]
+
+        const jobListingsContainer = document.getElementById("job-listings")
+        const searchInput = document.getElementById("search-input")
+        const citySelect = document.getElementById("city-select")
+        const categorySelect = document.getElementById("category-select")
+        const jobCountSpan = document.getElementById("job-count")
+        const locationButton = document.getElementById("location-button")
+
+        // Function to render job cards
+        function renderJobCards(jobs) {
+          jobListingsContainer.innerHTML = "" // Clear previous listings
+          if (jobs.length === 0) {
+            jobListingsContainer.innerHTML =
+              '<p class="text-center text-muted-foreground">No se encontraron vacantes que coincidan con tu búsqueda.</p>'
+          } else {
+            jobs.forEach((job) => {
+              const jobCard = document.createElement("div")
+              jobCard.className = "job-card"
+              jobCard.innerHTML = `
+                          <div class="job-card-header">
+                              <h3>${job.puesto}</h3>
+                              <p class="job-card-description">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v14Z"/><path d="M12 9v6"/><path d="M9 12h6"/></svg>
+                                  ${job.empresa}
+                              </p>
+                          </div>
+                          <div class="job-card-content">
+                              <div class="job-card-meta">
+                                  <p>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                      ${job.ciudad}
+                                  </p>
+                                  <p>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                                      ${job.sector}
+                                  </p>
+                              </div>
+                              <button class="button outline">Aplicar</button>
+                          </div>
+                      `
+              jobListingsContainer.appendChild(jobCard)
+            })
+          }
+          jobCountSpan.textContent = jobs.length
+        }
+
+        // Function to filter jobs
+        function filterJobs() {
+          const searchTerm = searchInput.value.toLowerCase()
+          const selectedCity = citySelect.value.toLowerCase()
+          const selectedCategory = categorySelect.value.toLowerCase()
+
+          const filtered = jobVacancies.filter((job) => {
+            const matchesSearch =
+              job.puesto.toLowerCase().includes(searchTerm) ||
+              job.empresa.toLowerCase().includes(searchTerm) ||
+              job.sector.toLowerCase().includes(searchTerm)
+            const matchesCity = selectedCity === "" || job.ciudad.toLowerCase() === selectedCity
+            const matchesCategory = selectedCategory === "" || job.sector.toLowerCase() === selectedCategory
+
+            return matchesSearch && matchesCity && matchesCategory
+          })
+          renderJobCards(filtered)
+        }
+
+        // Event Listeners for filters
+        searchInput.addEventListener("input", filterJobs)
+        citySelect.addEventListener("change", filterJobs)
+        categorySelect.addEventListener("change", filterJobs)
+
+        // Geolocation Functionality
+        locationButton.addEventListener("click", activateLocation)
+
+        function activateLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const latitude = position.coords.latitude
+                const longitude = position.coords.longitude
+                alert(
+                  `Ubicación detectada: Latitud ${latitude}, Longitud ${longitude}.\n\nPara obtener el nombre de la ciudad automáticamente, se necesitaría una API de geocodificación (ej. Google Maps API, OpenStreetMap Nominatim) que convierta estas coordenadas a un nombre de lugar.`,
+                )
+                console.log("Ubicación detectada:", { latitude, longitude })
+
+                // Optional: You could try to pre-select a city based on very rough coordinate ranges,
+                // but this is highly unreliable without a proper geocoding API.
+                // Example (not recommended for production without proper geocoding):
+                // if (latitude > 14.0 && latitude < 14.1 && longitude > -87.3 && longitude < -87.1) {
+                //   citySelect.value = "Tegucigalpa";
+                //   filterJobs();
+                // } else if (latitude > 15.4 && latitude < 15.5 && longitude > -88.1 && longitude < -87.9) {
+                //   citySelect.value = "San Pedro Sula";
+                //   filterJobs();
+                // }
+              },
+              (error) => {
+                let errorMessage = "No se pudo obtener tu ubicación."
+                switch (error.code) {
+                  case error.PERMISSION_DENIED:
+                    errorMessage =
+                      "Permiso de ubicación denegado. Por favor, habilita los permisos de ubicación en tu navegador."
+                    break
+                  case error.POSITION_UNAVAILABLE:
+                    errorMessage = "Información de ubicación no disponible."
+                    break
+                  case error.TIMEOUT:
+                    errorMessage = "La solicitud para obtener la ubicación ha caducado."
+                    break
+                  case error.UNKNOWN_ERROR:
+                    errorMessage = "Ha ocurrido un error desconocido al intentar obtener la ubicación."
+                    break
+                }
+                alert(errorMessage)
+                console.error("Error al obtener la ubicación:", error)
+              },
+              {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0,
+              },
+            )
+          } else {
+            alert("Tu navegador no soporta la geolocalización.")
+          }
+        }
+
+        // Initial render of all jobs
+        renderJobCards(jobVacancies)
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll("header nav a, .hero-section .button").forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault()
+            const targetId = this.getAttribute("href")
+            const targetElement = document.querySelector(targetId)
+            if (targetElement) {
+              targetElement.scrollIntoView({
+                behavior: "smooth",
+              })
+            }
+          })
+        })
+
+        // Set current year in footer
+        document.getElementById("current-year").textContent = new Date().getFullYear()
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById("theme-toggle")
+        const htmlElement = document.documentElement // Use html element for data-theme attribute
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem("theme")
+        if (savedTheme) {
+          htmlElement.setAttribute("data-theme", savedTheme)
+        } else {
+          // Default to light theme if no preference is saved
+          htmlElement.setAttribute("data-theme", "light")
+        }
+
+        themeToggle.addEventListener("click", () => {
+          const currentTheme = htmlElement.getAttribute("data-theme")
+          const newTheme = currentTheme === "dark" ? "light" : "dark"
+          htmlElement.setAttribute("data-theme", newTheme)
+          localStorage.setItem("theme", newTheme)
+        })
+      })
+
+        </script>
+</body>
+</html>

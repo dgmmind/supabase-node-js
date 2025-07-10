@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Ruta principal (vista dinámica)
 app.get('/', (req, res) => {
-    res.render('index', {
+    res.render('home', {
         titulo: 'Bienvenido a DGM Mind',
         pais: 'Honduras',
         nombre: 'David Maldonado',
