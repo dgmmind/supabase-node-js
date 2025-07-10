@@ -1039,29 +1039,19 @@ footer nav a {
         document.getElementById("current-year").textContent = new Date().getFullYear()
 
         // Dark Mode Toggle
-        const themeToggle = document.getElementById("theme-toggle")
-        const htmlElement = document.documentElement // Use html element for data-theme attribute
+// Establecer modo oscuro siempre
+    const htmlElement = document.documentElement
+    htmlElement.setAttribute("data-theme", "dark")
 
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem("theme")
-        if (savedTheme) {
-          htmlElement.setAttribute("data-theme", savedTheme)
-        } else {
-          // Default to light theme if no preference is saved
-          htmlElement.setAttribute("data-theme", "light")
-        }
-const currentTheme = htmlElement.getAttribute("data-theme")
-          const newTheme = currentTheme === "dark" ? "light" : "dark"
-          htmlElement.setAttribute("data-theme", newTheme)
-          localStorage.setItem("theme", newTheme)
-//         themeToggle.addEventListener("click", () => {
-//           const currentTheme = htmlElement.getAttribute("data-theme")
-//           const newTheme = currentTheme === "dark" ? "light" : "dark"
-//           htmlElement.setAttribute("data-theme", newTheme)
-//           localStorage.setItem("theme", newTheme)
-//         })
-      })
+    // Si quieres guardar en localStorage por consistencia, opcional
+    localStorage.setItem("theme", "dark")
 
+    // Establecer año actual en el footer (opcional)
+    const yearElement = document.getElementById("current-year")
+    if (yearElement) {
+      yearElement.textContent = new Date().getFullYear()
+    }
+  })
         </script>
 </body>
 </html>
