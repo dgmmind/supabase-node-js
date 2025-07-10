@@ -1,0 +1,26 @@
+{
+  "name": "supabase-node",
+  "version": "1.0.0",
+  "description": "Experimentando SUPABASE con NODE JS",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgmmind/supabase-node-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dgmmind/supabase-node-js/issues"
+  },
+  "homepage": "https://github.com/dgmmind/supabase-node-js#readme",
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0"
+  }
+}
