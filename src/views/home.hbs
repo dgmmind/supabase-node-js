@@ -1050,13 +1050,16 @@ footer nav a {
           // Default to light theme if no preference is saved
           htmlElement.setAttribute("data-theme", "light")
         }
-
-        themeToggle.addEventListener("click", () => {
-          const currentTheme = htmlElement.getAttribute("data-theme")
+const currentTheme = htmlElement.getAttribute("data-theme")
           const newTheme = currentTheme === "dark" ? "light" : "dark"
           htmlElement.setAttribute("data-theme", newTheme)
           localStorage.setItem("theme", newTheme)
-        })
+//         themeToggle.addEventListener("click", () => {
+//           const currentTheme = htmlElement.getAttribute("data-theme")
+//           const newTheme = currentTheme === "dark" ? "light" : "dark"
+//           htmlElement.setAttribute("data-theme", newTheme)
+//           localStorage.setItem("theme", newTheme)
+//         })
       })
 
         </script>
